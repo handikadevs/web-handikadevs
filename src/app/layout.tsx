@@ -85,6 +85,10 @@ export default async function RootLayout({
           }}
           fallbackTheme="dark"
         />
+        <meta
+          name="google-site-verification"
+          content="NiW7wwHBHlLIW-KdFpoEgiGj-bT1zhQMx4K3YIX0oa4"
+        />
       </head>
 
       <Script
