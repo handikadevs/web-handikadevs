@@ -1,4 +1,4 @@
-import { Project } from "@/app/api/projects/route"
+import { Project } from "@/lib/projects"
 import useSWR from "swr"
 
 type ApiRes<T> = { data: T }

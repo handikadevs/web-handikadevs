@@ -5,12 +5,9 @@ import { fail } from "@/lib/api"
 export const revalidate = 3600
 const ALLOWED = new Set(["avatar", "logo"])
 
-export async function GET(
-  req: Request,
-  { params }: { params: { key: string } }
-) {
+export async function GET(req: Request, context: any) {
   try {
-    const key = params.key
+    const key = context.params.key
     if (!ALLOWED.has(key)) {
       return fail(400, "Not allowed")
     }

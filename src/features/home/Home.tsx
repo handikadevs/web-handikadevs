@@ -1,4 +1,4 @@
-import { About, HomeContent, Newsletter } from "@/app/api/informations/route"
+import { About, HomeContent, Newsletter } from "@/lib/informations"
 import { Mailchimp } from "@/components"
 import { RouteMap } from "@/resources/config"
 import {

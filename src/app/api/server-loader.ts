@@ -1,6 +1,6 @@
-import { loadAllBlogs } from "./blogs/route"
-import { loadInformations } from "./informations/route"
-import { loadAllProjects } from "./projects/route"
+import { loadInformations } from "@/lib/informations"
+import { loadAllProjects } from "@/lib/projects"
+import { loadAllBlogs } from "@/lib/blogs"
 
 export async function getInformationsSSR() {
   return await loadInformations()

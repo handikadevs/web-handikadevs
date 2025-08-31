@@ -1,6 +1,6 @@
 import { Flex, IconButton, SmartLink, Text } from "@once-ui-system/core"
 import styles from "./Footer.module.scss"
-import { Social } from "@/app/api/informations/route"
+import { Social } from "@/lib/informations"
 
 interface FooterProps {
   name: string

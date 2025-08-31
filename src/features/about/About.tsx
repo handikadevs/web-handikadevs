@@ -13,7 +13,7 @@ import {
 import styles from "@/components/tableOfContent/about.module.scss"
 import parse from "html-react-parser"
 import { splitFragments, splitToList } from "@/helpers/splitFragments"
-import { About, Person, Social } from "@/app/api/informations/route"
+import { About, Person, Social } from "@/lib/informations"
 import React from "react"
 import { ScheduleButton, TableOfContents } from "@/components"
 

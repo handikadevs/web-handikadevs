@@ -1,6 +1,5 @@
 // config.ts
 import { Inter, Sora, JetBrains_Mono } from "next/font/google"
-import { home } from "./content"
 
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
 export const baseURL = "https://handikadevs.vercel.app"
@@ -271,7 +270,8 @@ export const schema: SchemaConfig = {
   logo: "",
   type: "Individual",
   name: "Handika Kristofan Afanda",
-  description: home.description,
+  description:
+    "I'm Handika Kristofan, a Frontend Developer and Designer, My journey in technology has always been driven by curiosity and the desire to create solutions.",
   email: "handikadevs@gmail.com",
 }
 

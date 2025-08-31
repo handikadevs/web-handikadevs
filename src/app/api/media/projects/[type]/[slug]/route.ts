@@ -4,16 +4,13 @@ import { fail } from "@/lib/api"
 
 export const revalidate = 3600
 
-export async function GET(
-  req: Request,
-  { params }: { params: { type: string; slug: string } }
-) {
+export async function GET(req: Request, context: any) {
   try {
     const { searchParams } = new URL(req.url)
     const debug = searchParams.get("debug") === "1"
 
     const { folderId, trace } = await resolveFolderPathIds(
-      ["projects", params.type, params.slug],
+      ["projects", context.params.type, context.params.slug],
       revalidate,
       debug
     )
@@ -23,7 +20,7 @@ export async function GET(
     return NextResponse.json({
       files,
       meta: {
-        path: `projects/${params.type}/${params.slug}`,
+        path: `projects/${context.params.type}/${context.params.slug}`,
         ...(debug && trace ? { trace } : {}),
       },
     })

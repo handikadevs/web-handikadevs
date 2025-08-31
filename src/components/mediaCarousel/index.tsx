@@ -71,36 +71,43 @@ const Slide = ({
 }) => {
   const holderRef = useRef<HTMLDivElement>(null)
   const [ready, setReady] = useState(false)
+  const readyRef = useRef(false)
 
   useEffect(() => {
+    readyRef.current = false
     setReady(false)
     const holder = holderRef.current
     if (!holder) return
 
     const onImgEvent = (e: Event) => {
       const t = e.target as HTMLImageElement | null
-      if (t?.tagName === "IMG") {
-        if (t.complete && t.naturalWidth > 0) setReady(true)
+      if (t?.tagName === "IMG" && t.complete && t.naturalWidth > 0) {
+        if (!readyRef.current) {
+          readyRef.current = true
+          setReady(true)
+        }
       }
     }
+
     holder.addEventListener("load", onImgEvent, true)
     holder.addEventListener("error", onImgEvent, true)
 
     const img = holder.querySelector("img") as HTMLImageElement | null
-    if (img && img.complete && img.naturalWidth > 0) setReady(true)
+    if (img && img.complete && img.naturalWidth > 0) {
+      readyRef.current = true
+      setReady(true)
+    }
 
-    let raf = 0
-    let tries = 0
-    const tick = () => {
-      if (!holder || ready) return
+    let raf = requestAnimationFrame(function tick() {
+      if (!holder || readyRef.current) return
       const i = holder.querySelector("img") as HTMLImageElement | null
       if (i && i.complete && i.naturalWidth > 0) {
+        readyRef.current = true
         setReady(true)
         return
       }
-      if (++tries < 60) raf = requestAnimationFrame(tick) // ~1s
-    }
-    raf = requestAnimationFrame(tick)
+      raf = requestAnimationFrame(tick)
+    })
 
     return () => {
       holder.removeEventListener("load", onImgEvent, true)

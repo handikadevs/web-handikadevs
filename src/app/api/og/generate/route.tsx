@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og"
 import { baseURL } from "@/resources"
 import { getInformationsSSR } from "../../server-loader"
@@ -8,24 +9,31 @@ export async function GET(request: Request) {
   const info = await getInformationsSSR()
   const { person } = info
 
-  let url = new URL(request.url)
-  let title = url.searchParams.get("title") || "Handika Kristofan - Portfolio"
+  const urlObj = new URL(request.url)
+  const title =
+    urlObj.searchParams.get("title") || "Handika Kristofan - Portfolio"
+
+  // safer join untuk avatar (hindari double slash)
+  const avatarUrl = person.avatar?.startsWith("http")
+    ? person.avatar
+    : `${baseURL.replace(/\/$/, "")}${
+        person.avatar?.startsWith("/") ? "" : "/"
+      }${person.avatar ?? ""}`
 
   async function loadGoogleFont(font: string) {
-    const url = `https://fonts.googleapis.com/css2?family=${font}`
-    const css = await (await fetch(url)).text()
-    const resource = css.match(
-      /src: url\((.+)\) format\('(opentype|truetype)'\)/
+    const cssUrl = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(
+      font
+    )}`
+    const css = await (await fetch(cssUrl)).text()
+    // ambil woff2/ttf/otf pertama yang ketemu
+    const match = css.match(
+      /src:\s*url\(([^)]+)\)\s*format\(['"]?(?:woff2|opentype|truetype|woff)['"]?\)/i
     )
+    if (!match) throw new Error("failed to parse font CSS")
 
-    if (resource) {
-      const response = await fetch(resource[1])
-      if (response.status == 200) {
-        return await response.arrayBuffer()
-      }
-    }
-
-    throw new Error("failed to load font data")
+    const fontRes = await fetch(match[1])
+    if (!fontRes.ok) throw new Error(`failed to load font: ${fontRes.status}`)
+    return await fontRes.arrayBuffer()
   }
 
   return new ImageResponse(
@@ -62,6 +70,7 @@ export async function GET(request: Request) {
           >
             {title}
           </span>
+
           <div
             style={{
               display: "flex",
@@ -70,7 +79,8 @@ export async function GET(request: Request) {
             }}
           >
             <img
-              src={baseURL + person.avatar}
+              src={avatarUrl}
+              alt={person.name || "Profile"}
               style={{
                 width: "12rem",
                 height: "12rem",
@@ -78,6 +88,7 @@ export async function GET(request: Request) {
                 borderRadius: "100%",
               }}
             />
+
             <div
               style={{
                 display: "flex",

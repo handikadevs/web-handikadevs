@@ -12,22 +12,24 @@ const need = (k: string) => {
   return v
 }
 
-export async function GET(
-  _req: Request,
-  { params }: { params: { key: string; filename: string[] } }
-) {
+export async function GET(_req: Request, context: any) {
   try {
-    if (!ALLOWED.has(params.key)) {
+    const { key, filename } = context.params
+
+    if (!ALLOWED.has(key)) {
       return NextResponse.json({ error: "Not allowed" }, { status: 400 })
     }
 
     const keyApi = need("GOOGLE_API_KEY")
     const { folderId } = await resolveFolderPathIds(
-      ["informations", params.key],
+      ["informations", key],
       revalidate,
       false
     )
-    const rawName = decodeURIComponent(params.filename.join("/"))
+
+    const rawName = decodeURIComponent(
+      Array.isArray(filename) ? filename.join("/") : filename
+    )
 
     const q = encodeURIComponent(
       `name='${esc(rawName)}' and '${folderId}' in parents and trashed=false`
@@ -44,6 +46,7 @@ export async function GET(
         (await lookup.text()) || "Failed to lookup file"
       )
     }
+
     const data = await lookup.json()
     const file = data?.files?.[0]
     if (!file) return fail(404, "File not found")

@@ -1,12 +1,14 @@
-import { ApiResp, InformationDetail } from "@/app/api/informations/route"
+import { InformationDetail } from "@/lib/informations"
 import useSWRImmutable from "swr/immutable"
+
+type ApiRes<T> = { data: T }
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 export function useInformations() {
   const key = "/api/informations"
   const { data, isLoading, error, isValidating } = useSWRImmutable<
-    ApiResp<InformationDetail>
+    ApiRes<InformationDetail>
   >(key, fetcher, {
     revalidateOnFocus: false,
     dedupingInterval: 60_000,
