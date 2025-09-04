@@ -9,11 +9,13 @@ const { project, person, about } = info
 
 export async function generateMetadata() {
   return Meta.generate({
-    title: project.title,
-    description: project.description,
-    baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(project.title)}`,
-    path: project.path,
+    title: project.title ?? "Project - Handika Kristofan",
+    description: project.description ?? "View Handika Kristofan's Projects",
+    baseURL: baseURL ?? "https://handikadevs.vercel.app",
+    image: `/api/og/generate?title=${encodeURIComponent(
+      project.title ?? "Project - Handika Kristofan"
+    )}`,
+    path: project.path ?? "/project",
   })
 }
 
@@ -24,15 +26,23 @@ export default function Project() {
       <Column maxWidth="m">
         <Schema
           as="webPage"
-          baseURL={baseURL}
-          path={project.path}
-          title={project.title}
-          description={project.description}
-          image={`/api/og/generate?title=${encodeURIComponent(project.title)}`}
+          baseURL={baseURL ?? "https://handikadevs.vercel.app"}
+          path={project.path ?? "/project"}
+          title={project.title ?? "Project - Handika Kristofan"}
+          description={
+            project.description ?? "View Handika Kristofan's Projects"
+          }
+          image={`/api/og/generate?title=${encodeURIComponent(
+            project.title ?? "Project - Handika Kristofan"
+          )}`}
           author={{
-            name: person.name,
-            url: `${baseURL}${about.path}`,
-            image: `${baseURL}${person.avatar}`,
+            name: person.name ?? "Handika Kristofan",
+            url:
+              `${baseURL}${about.path}` ||
+              "https://handikadevs.vercel.app/project",
+            image:
+              `${baseURL}${person.avatar}` ||
+              "https://handikadevs.vercel.app/images/avatar.png",
           }}
         />
         <Heading

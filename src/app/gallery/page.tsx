@@ -8,11 +8,13 @@ const { gallery, person } = info
 
 export async function generateMetadata() {
   return Meta.generate({
-    title: gallery.title,
-    description: gallery.description,
-    baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(gallery.title)}`,
-    path: gallery.path,
+    title: gallery.title ?? "Gallery - Handika Kristofan",
+    description: gallery.description ?? "View Handika Kristofan's Galleries",
+    baseURL: baseURL ?? "https://handikadevs.vercel.app",
+    image: `/api/og/generate?title=${encodeURIComponent(
+      gallery.title ?? "Gallery - Handika Kristofan"
+    )}`,
+    path: gallery.path ?? "/gallery",
   })
 }
 
@@ -23,15 +25,23 @@ export default function Gallery() {
       <Flex maxWidth="l">
         <Schema
           as="webPage"
-          baseURL={baseURL}
-          title={gallery.title}
-          description={gallery.description}
-          path={gallery.path}
-          image={`/api/og/generate?title=${encodeURIComponent(gallery.title)}`}
+          baseURL={baseURL ?? "https://handikadevs.vercel.app"}
+          title={gallery.title ?? "Gallery - Handika Kristofan"}
+          description={
+            gallery.description ?? "View Handika Kristofan's Galleries"
+          }
+          path={gallery.path ?? "/gallery"}
+          image={`/api/og/generate?title=${encodeURIComponent(
+            gallery.title ?? "Gallery - Handika Kristofan"
+          )}`}
           author={{
-            name: person.name,
-            url: `${baseURL}${gallery.path}`,
-            image: `${baseURL}${person.avatar}`,
+            name: person.name ?? "Handika Kristofan",
+            url:
+              `${baseURL}${gallery.path}` ||
+              "https://handikadevs.vercel.app/gallery",
+            image:
+              `${baseURL}${person.avatar}` ||
+              "https://handikadevs.vercel.app/images/avatar.png",
           }}
         />
         <MasonryGrid images={gallery.images} />

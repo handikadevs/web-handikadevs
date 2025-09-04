@@ -11,27 +11,32 @@ const { person, about, home, newsletter } = info
 
 export async function generateMetadata() {
   return Meta.generate({
-    title: home.title,
-    description: home.description,
-    baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(home.title)}`,
-    path: home.path,
+    title: home.title ?? "Home - Handika Kristofan",
+    description:
+      home.description ??
+      "View Handika Kristofan's Frontend Developer and Designer From Asia/Jakarta",
+    baseURL: baseURL ?? "https://handikadevs.vercel.app",
+    image: `/api/og/generate?title=${encodeURIComponent(
+      home.title ?? "Home - Handika Kristofan"
+    )}`,
+    path: home.path ?? "/",
   })
 }
 
 const Home = () => {
   const website = websiteJsonLd({
-    siteUrl: baseURL,
+    siteUrl: baseURL ?? "https://handikadevs.vercel.app",
     siteName: person
       ? person.name + "-" + person.role
-      : "Handika Kristofan - Developer Portfolio",
+      : "Handika Kristofan - Frontend Developer and Designer Portfolio",
   })
 
   const personal = personJsonLd({
-    siteUrl: baseURL,
+    siteUrl: baseURL ?? "https://handikadevs.vercel.app",
     name: person.name ?? "Handika Kristofan",
-    jobTitle: person.role ?? "Product Engineering",
-    imageUrl: person.avatar,
+    jobTitle: person.role ?? "Frontend Developer and Designers",
+    imageUrl:
+      person.avatar ?? "https://handikadevs.vercel.app/images/avatar.png",
     sameAs: [
       "https://www.linkedin.com/in/handikadevs",
       "https://github.com/handikadevs",
@@ -54,15 +59,22 @@ const Home = () => {
       />
       <Schema
         as="webPage"
-        baseURL={baseURL}
-        path={home.path}
-        title={home.title}
-        description={home.description}
-        image={`/api/og/generate?title=${encodeURIComponent(home.title)}`}
+        baseURL={baseURL ?? "https://handikadevs.vercel.app"}
+        path={home.path ?? "/"}
+        title={home.title ?? "Home - Handika Kristofan"}
+        description={
+          home.description ??
+          "View Handika Kristofan's Frontend Developer and Designer From Asia/Jakarta"
+        }
+        image={`/api/og/generate?title=${encodeURIComponent(
+          home.title ?? "Home - Handika Kristofan"
+        )}`}
         author={{
-          name: person.name,
-          url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
+          name: person.name ?? "Handika Kristofan",
+          url: `${baseURL}${about.path}` || "https://handikadevs.vercel.app/",
+          image:
+            `${baseURL}${person.avatar}` ||
+            "https://handikadevs.vercel.app/images/avatar.png",
         }}
       />
       <Homepage

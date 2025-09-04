@@ -10,11 +10,15 @@ const { person, about, social } = info
 
 export async function generateMetadata() {
   return Meta.generate({
-    title: about.title,
-    description: about.description,
-    baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(about.title)}`,
-    path: about.path,
+    title: about.title ?? "About - Handika Kristofan",
+    description:
+      about.description ??
+      "Meet Handika Kristofan, Frontend Developer and Designer from Asia/Jakarta",
+    baseURL: baseURL ?? "https://handikadevs.vercel.app",
+    image: `/api/og/generate?title=${encodeURIComponent(
+      about.title ?? "About - Handika Kristofan"
+    )}`,
+    path: about.path ?? "/about",
   })
 }
 
@@ -24,15 +28,23 @@ export default function About() {
       <BreadcrumbJsonLd name="About" path="about" />
       <Schema
         as="webPage"
-        baseURL={baseURL}
-        title={about.title}
-        description={about.description}
-        path={about.path}
-        image={`/api/og/generate?title=${encodeURIComponent(about.title)}`}
+        baseURL={baseURL ?? "https://handikadevs.vercel.app"}
+        title={about.title ?? "About - Handika Kristofan"}
+        description={
+          about.description ??
+          "Meet Handika Kristofan, Frontend Developer and Designer from Asia/Jakarta"
+        }
+        path={about.path ?? "/about"}
+        image={`/api/og/generate?title=${encodeURIComponent(
+          about.title ?? "About - Handika Kristofan"
+        )}`}
         author={{
-          name: person.name,
-          url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
+          name: person.name ?? "Handika Kristofan",
+          url:
+            `${baseURL}${about.path}` || "https://handikadevs.vercel.app/about",
+          image:
+            `${baseURL}${person.avatar}` ||
+            "https://handikadevs.vercel.app/images/avatar.png",
         }}
       />
       <Aboutpage person={person} about={about} social={social} />

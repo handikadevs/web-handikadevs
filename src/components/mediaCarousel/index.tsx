@@ -8,7 +8,7 @@ interface MediaCarouselProps {
   title: string
   sizes?: string
   aspectRatio?: string
-  imageClassName?: string
+  className?: string
   carouselControls: boolean
   carouselIndicators: "line" | "thumbnail"
 }
@@ -16,9 +16,6 @@ interface MediaCarouselProps {
 export const MediaCarousel = ({
   images,
   title,
-  sizes = "(max-width: 960px) 100vw, 960px",
-  aspectRatio = "16 / 9",
-  imageClassName = "object-cover w-full h-full",
   carouselControls,
   carouselIndicators,
 }: MediaCarouselProps) => {
@@ -35,17 +32,16 @@ export const MediaCarousel = ({
         scaling: 1.2,
         height: 5,
       }}
-      sizes={sizes}
       items={urls.map((src, i) => ({
         slide: (
           <Slide
-            key={src}
+            key={i}
             src={src}
             alt={title}
-            sizes={sizes}
-            aspectRatio={aspectRatio}
-            className={imageClassName}
-            priority={i === 0}
+            sizes="(max-width: 960px) 100vw, 960px"
+            aspectRatio="16 / 9"
+            className="position-fixed object-cover w-full h-full"
+            priority={i < 1}
           />
         ),
         alt: title,
@@ -117,19 +113,165 @@ const Slide = ({
   }, [src])
 
   return (
-    <div ref={holderRef} className="relative w-full" style={{ aspectRatio }}>
-      {!ready && <Media src="" loading />}
-
+    <div ref={holderRef}>
+      {!ready && (
+        <Media src="" loading aspectRatio={aspectRatio} className={className} />
+      )}
       <Media
         src={src}
         alt={alt}
+        aspectRatio={aspectRatio}
         className={className}
         sizes={sizes}
         priority={priority}
         loading={false}
+        radius="m"
         onLoad={() => setReady(true)}
         onError={() => setReady(true)}
       />
     </div>
   )
 }
+
+/* --- detect Safari/iOS robust --- */
+// function useIsSafari() {
+//   const [isSafari, setIsSafari] = useState(false)
+//   useEffect(() => {
+//     if (typeof navigator === "undefined") return
+//     const ua = navigator.userAgent || ""
+//     const vendor = navigator.vendor || ""
+//     const isIOS = /iP(hone|ad|od)/i.test(ua)
+//     const isChromeLike =
+//       /(Chrome|Chromium|CriOS|CrMo|Edg|EdgiOS|OPR|Brave)/i.test(ua)
+//     const isFirefoxiOS = /FxiOS/i.test(ua)
+//     const isMacSafari =
+//       /Safari/i.test(ua) && !isChromeLike && /Apple/i.test(vendor)
+//     const isIOSSafari = isIOS && !isChromeLike && !isFirefoxiOS
+//     setIsSafari(isMacSafari || isIOSSafari)
+//   }, [])
+//   return isSafari
+// }
+
+// const parseRatio = (ar: string) => {
+//   // "16 / 9" -> {w:16,h:9}
+//   const [w, h] = ar.split("/").map((n) => Number(n.trim()))
+//   return { w: w || 16, h: h || 9 }
+// }
+
+// const Slide = ({
+//   src,
+//   alt,
+//   sizes,
+//   aspectRatio,
+//   className,
+//   priority,
+// }: {
+//   src: string
+//   alt: string
+//   sizes: string
+//   aspectRatio: string
+//   className?: string
+//   priority: boolean
+// }) => {
+//   const isSafari = useIsSafari()
+//   const [ready, setReady] = useState(false)
+//   const [supportsAspect, setSupportsAspect] = useState(true)
+
+//   // reset & precheck khusus Safari (tanpa menambah hook lain)
+//   useEffect(() => {
+//     setReady(false)
+//     // cek dukungan aspect-ratio di runtime
+//     const ok =
+//       typeof window !== "undefined" &&
+//       typeof (window as any).CSS !== "undefined" &&
+//       (window as any).CSS.supports?.("aspect-ratio: 1 / 1")
+//     setSupportsAspect(!!ok)
+
+//     if (!isSafari) return
+//     const img = new Image()
+//     img.src = src
+//     const done = () => setReady(true)
+//     img.onload = done
+//     img.onerror = done
+//     // kalau sudah cached
+//     if ((img as any).complete && (img as any).naturalWidth > 0) setReady(true)
+//   }, [src, isSafari])
+
+//   const { w, h } = parseRatio(aspectRatio)
+//   const paddingTopPct = (h / w) * 100
+
+//   return (
+//     <div
+//       className="relative w-full"
+//       style={supportsAspect ? { aspectRatio } : undefined}
+//       key={src}
+//     >
+//       {/* Fallback tinggi kalau aspect-ratio TIDAK didukung */}
+//       {!supportsAspect && <div style={{ paddingTop: `${paddingTopPct}%` }} />}
+
+//       <div className="absolute inset-0">
+//         {/* skeleton */}
+//         {!ready &&
+//           (isSafari ? (
+//             <>
+//               <div
+//                 aria-hidden
+//                 className="absolute inset-0"
+//                 style={{
+//                   borderRadius: 12,
+//                   background:
+//                     "linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.10), rgba(255,255,255,.06))",
+//                   backgroundSize: "200% 100%",
+//                   animation: "shimmer 1.2s ease-in-out infinite",
+//                 }}
+//               />
+//               <style
+//                 dangerouslySetInnerHTML={{
+//                   __html: `
+//                 @keyframes shimmer {
+//                   0% { background-position: 200% 0; }
+//                   100% { background-position: -200% 0; }
+//                   }`,
+//                 }}
+//               />
+//             </>
+//           ) : (
+//             <Media src="" loading />
+//           ))}
+
+//         {/* konten */}
+//         {isSafari ? (
+//           <img
+//             src={src}
+//             alt={alt}
+//             decoding="async"
+//             loading={priority ? "eager" : "lazy"}
+//             className={className}
+//             style={{
+//               inset: 0,
+//               width: "100%",
+//               height: "100%",
+//               objectFit: "cover",
+//               borderRadius: 12,
+//               opacity: ready ? 1 : 0,
+//               transition: "opacity .2s ease",
+//             }}
+//             onLoad={() => setReady(true)}
+//             onError={() => setReady(true)}
+//           />
+//         ) : (
+//           <Media
+//             src={src}
+//             alt={alt}
+//             className={className}
+//             sizes={sizes}
+//             priority={priority}
+//             loading={false}
+//             onLoad={() => setReady(true)}
+//             onError={() => setReady(true)}
+//           />
+//         )}
+//       </div>
+//     </div>
+//   )
+// }

@@ -9,11 +9,13 @@ const { blog, person, newsletter } = info
 
 export async function generateMetadata() {
   return Meta.generate({
-    title: blog.title,
-    description: blog.description,
-    baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(blog.title)}`,
-    path: blog.path,
+    title: blog.title ?? "Blog - Handika Kristofan",
+    description: blog.description ?? "View Handika Kristofan's Latest Posts",
+    baseURL: baseURL ?? "https://handikadevs.vercel.app",
+    image: `/api/og/generate?title=${encodeURIComponent(
+      blog.title ?? "Blog - Handika Kristofan"
+    )}`,
+    path: blog.path ?? "/blog",
   })
 }
 
@@ -24,15 +26,22 @@ export default function Blog() {
       <Column maxWidth="s">
         <Schema
           as="blogPosting"
-          baseURL={baseURL}
-          title={blog.title}
-          description={blog.description}
-          path={blog.path}
-          image={`/api/og/generate?title=${encodeURIComponent(blog.title)}`}
+          baseURL={baseURL ?? "https://handikadevs.vercel.app"}
+          title={blog.title ?? "Blog - Handika Kristofan"}
+          description={
+            blog.description ?? "View Handika Kristofan's Latest Posts"
+          }
+          path={blog.path ?? "/blog"}
+          image={`/api/og/generate?title=${encodeURIComponent(
+            blog.title ?? "Blog - Handika Kristofan"
+          )}`}
           author={{
-            name: person.name,
-            url: `${baseURL}/blog`,
-            image: `${baseURL}${person.avatar}`,
+            name: person.name ?? "Handika Kristofan",
+            url:
+              `${baseURL}${blog.path}` || "https://handikadevs.vercel.app/blog",
+            image:
+              `${baseURL}${person.avatar}` ||
+              "https://handikadevs.vercel.app/images/avatar.png",
           }}
         />
         <Heading
