@@ -89,6 +89,20 @@ export default async function RootLayout({
           name="google-site-verification"
           content="NiW7wwHBHlLIW-KdFpoEgiGj-bT1zhQMx4K3YIX0oa4"
         />
+        {/* iOS full-screen */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+        {/* icon iOS */}
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        {/* theme color (Android status bar) */}
+        <meta name="theme-color" content="#0B0B0C" />
       </head>
 
       <Script

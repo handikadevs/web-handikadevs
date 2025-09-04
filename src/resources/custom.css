@@ -53,6 +53,15 @@
   /*
 }*/
 
+:root {
+  --safe-top: env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
+}
+.app-shell {
+  padding-top: calc(16px + var(--safe-top));
+  padding-bottom: calc(16px + var(--safe-bottom));
+}
+
 .calendar-button button {
   border-radius: 50px !important;
   color: white !important;

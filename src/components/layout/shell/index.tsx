@@ -2,7 +2,7 @@
 
 import { Column, Flex } from "@once-ui-system/core"
 import DecorBackground from "./DecorBackground"
-import { Header, Footer, RouteGuard } from "@/components"
+import { Header, Footer, RouteGuard, InstallPrompt } from "@/components"
 
 export const AppShell = ({
   person,
@@ -23,6 +23,7 @@ export const AppShell = ({
       padding="0"
       horizontal="center"
     >
+      <InstallPrompt />
       <DecorBackground />
       <Flex fillWidth minHeight="16" hide="s" />
       <Header location={person.location} />
