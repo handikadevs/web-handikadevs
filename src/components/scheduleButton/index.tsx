@@ -11,7 +11,7 @@ interface Props {
 
 export const ScheduleButton = ({
   url,
-  label = "⮞",
+  label = "\u{1F680}",
   color = "#0B8184",
   className,
 }: Props) => {

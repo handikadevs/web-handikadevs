@@ -6,6 +6,7 @@ import { Fade, Flex, Line, ToggleButton } from "@once-ui-system/core"
 import { routes, display } from "@/resources"
 import styles from "./Header.module.scss"
 import { ThemeToggle } from "../themeToggle"
+import { BottomNav } from "../bottomNav"
 
 type TimeDisplayProps = {
   timeZone: string
@@ -65,7 +66,7 @@ export const Header = ({ location }: HeaderProps) => {
       <Flex
         fitHeight
         position="unset"
-        className={styles.position}
+        className={`${styles.position} s-flex-hide`}
         as="header"
         zIndex={9}
         fillWidth
@@ -196,6 +197,8 @@ export const Header = ({ location }: HeaderProps) => {
           </Flex>
         </Flex>
       </Flex>
+
+      <BottomNav />
     </>
   )
 }

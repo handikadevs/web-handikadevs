@@ -1,0 +1,109 @@
+:root {
+  --hit: clamp(40px, 5vw + 26px, 52px);
+  --icon: clamp(18px, 2vw + 12px, 24px);
+  --gap: 6px;
+  --pill-radius: 9999px;
+
+  /* defaults (overridden by theme below) */
+  --bar-bg: #fff;
+  --bar-border: rgba(0, 0, 0, 0.08);
+  --btn-bg-active: rgba(0, 0, 0, 0.06);
+  --icon-color: #121316;
+  --text-muted: #8b8f98;
+}
+
+:global(html[data-theme="dark"]) {
+  --bar-bg: rgb(16, 18, 22);
+  --btn-bg-active: var(--brand-alpha-medium);
+  --icon-color: #edeef2;
+}
+
+:global(html[data-theme="light"]) {
+  --bar-bg: #fff;
+  --btn-bg-active: var(--brand-alpha-medium);
+  --icon-color: #121316;
+}
+
+.bar {
+  padding: 4px max(6px, env(safe-area-inset-right))
+    calc(4px + env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.inner {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  width: 100vw;
+  margin: none !important;
+  padding: 4;
+  border-radius: var(--pill-radius);
+  background: var(--bar-bg);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== ITEM ===== */
+.btn {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  height: var(--hit);
+  padding: 0;         
+  border-radius: var(--pill-radius);
+}
+
+.btn :global(a),
+.btn :global(button) {
+  min-width: var(--hit);
+  min-height: var(--hit);
+  width: var(--hit);
+  height: var(--hit);
+  padding: 0;
+  border-radius: var(--pill-radius);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-color: transparent !important;
+  background: transparent !important;
+}
+
+.btn :global(svg) {
+  width: var(--icon);
+  height: var(--icon);
+}
+
+/* ===== LABEL ===== */
+.label {
+  display: none;
+  font: 500 14px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
+  letter-spacing: .01em;
+  white-space: nowrap;
+  color: var(--icon-color);
+  user-select: none;
+  pointer-events: none;
+}
+
+.bubble {
+    margin-left: -4px;
+}
+
+/* ===== ACTIVE ===== */
+.active {
+  background: var(--btn-bg-active);
+  padding-right: 12px;         
+}
+
+.active .label { display: inline-block; margin-left: -10px; }
+
+:global(body.has-bottom-nav) {
+  padding-bottom: max(calc(var(--hit) + 18px), 78px);
+}
+
+/* micro tweak mini screens */
+@media (max-width: 380px) {
+  .inner { gap: 2px; }
+  .btn { gap: 1px; }
+}
