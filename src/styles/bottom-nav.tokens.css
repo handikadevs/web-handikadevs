@@ -23,3 +23,7 @@ html[data-theme="light"] {
   --btn-bg-active: var(--brand-alpha-medium);
   --icon-color: #121316;
 }
+
+body.has-bottom-nav {
+  padding-bottom: max(calc(var(--hit, 56px) + 16px), 72px);
+}

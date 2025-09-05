@@ -72,10 +72,6 @@
 
 .active .label { display: inline-block; margin-left: -10px; }
 
-:global(body.has-bottom-nav) {
-  padding-bottom: max(calc(var(--hit) + 18px), 78px);
-}
-
 /* micro tweak mini screens */
 @media (max-width: 380px) {
   .inner { gap: 2px; }
