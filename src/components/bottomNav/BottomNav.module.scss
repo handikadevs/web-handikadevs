@@ -1,4 +1,4 @@
-:root {
+:global(:root) {
   --hit: clamp(40px, 5vw + 26px, 52px);
   --icon: clamp(18px, 2vw + 12px, 24px);
   --gap: 6px;
