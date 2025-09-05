@@ -1,0 +1,25 @@
+:root {
+  --hit: clamp(40px, 5vw + 26px, 52px);
+  --icon: clamp(18px, 2vw + 12px, 24px);
+  --gap: 6px;
+  --pill-radius: 9999px;
+
+  /* defaults (overridden by theme below) */
+  --bar-bg: #fff;
+  --bar-border: rgba(0, 0, 0, 0.08);
+  --btn-bg-active: rgba(0, 0, 0, 0.06);
+  --icon-color: #121316;
+  --text-muted: #8b8f98;
+}
+
+html[data-theme="dark"] {
+  --bar-bg: rgb(16, 18, 22);
+  --btn-bg-active: var(--brand-alpha-medium);
+  --icon-color: #edeef2;
+}
+
+html[data-theme="light"] {
+  --bar-bg: #fff;
+  --btn-bg-active: var(--brand-alpha-medium);
+  --icon-color: #121316;
+}

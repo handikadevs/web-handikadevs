@@ -1,6 +1,7 @@
 import "@once-ui-system/core/css/styles.css"
 import "@once-ui-system/core/css/tokens.css"
 import "@/resources/custom.css"
+import "@/styles/bottom-nav.tokens.css"
 
 import classNames from "classnames"
 import { Flex, Meta } from "@once-ui-system/core"
