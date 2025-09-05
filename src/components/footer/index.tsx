@@ -28,11 +28,12 @@ export const Footer = ({ name, social }: FooterProps) => {
         vertical="center"
       >
         <Text variant="body-default-s" onBackground="neutral-strong">
-          <Text onBackground="neutral-weak">Copyright © {currentYear}</Text>
+          <Text onBackground="neutral-weak">© {currentYear}</Text>
           <Text paddingX="4" onBackground="neutral-weak">
             <SmartLink href="https://linkedin.com/in/handikadevs">
               {name}
             </SmartLink>
+            {" - All rights reserved."}
           </Text>
         </Text>
         <Flex gap="16">
