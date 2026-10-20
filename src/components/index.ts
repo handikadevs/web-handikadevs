@@ -1,4 +1,5 @@
 export { Blog } from "@/components/blog"
+export { default as AdBanner } from "@/components/ads/AdBanner"
 export { Footer } from "@/components/footer"
 export { Header } from "@/components/header"
 export { HeadingLink } from "@/components/headingLink"

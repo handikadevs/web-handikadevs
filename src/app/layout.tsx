@@ -1,21 +1,21 @@
-import "@once-ui-system/core/css/styles.css"
-import "@once-ui-system/core/css/tokens.css"
-import "@/resources/custom.css"
-import "@/styles/bottom-nav.tokens.css"
+import "@once-ui-system/core/css/styles.css";
+import "@once-ui-system/core/css/tokens.css";
+import "@/resources/custom.css";
+import "@/styles/bottom-nav.tokens.css";
 
-import classNames from "classnames"
-import { Flex, Meta } from "@once-ui-system/core"
-import { Provider, ThemeInit, AppShell } from "@/components"
-import { baseURL, fonts, style, dataStyle } from "@/resources"
-import { getInformationsSSR } from "./api/server-loader"
-import Script from "next/script"
-import { orgJsonLd } from "@/lib/seo"
+import classNames from "classnames";
+import { Flex, Meta } from "@once-ui-system/core";
+import { Provider, ThemeInit, AppShell } from "@/components";
+import { baseURL, fonts, style, dataStyle } from "@/resources";
+import { getInformationsSSR } from "./api/server-loader";
+import Script from "next/script";
+import { orgJsonLd } from "@/lib/seo";
 
-const SITE_URL = baseURL ?? "https://handikadevs.vercel.app"
-const SITE_NAME = "Handika Kristofan - Developer Portfolio"
+const SITE_URL = baseURL ?? "https://handikadevs.vercel.app";
+const SITE_NAME = "Handika Kristofan - Developer Portfolio";
 
-const info = await getInformationsSSR()
-const { person, home, social } = info
+const info = await getInformationsSSR();
+const { person, home, social } = info;
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -24,7 +24,7 @@ export async function generateMetadata() {
     baseURL,
     path: home.path,
     image: home.image,
-  })
+  });
 }
 
 const htmlDataAttrs = {
@@ -39,7 +39,7 @@ const htmlDataAttrs = {
   "data-scaling": style.scaling,
   "data-viz-style": dataStyle.variant,
   "data-theme": "dark",
-} as Record<string, string>
+} as Record<string, string>;
 
 export default async function RootLayout({
   children,
@@ -54,7 +54,7 @@ export default async function RootLayout({
       "https://github.com/handikadevs",
       "https://x.com/handikadevs",
     ],
-  })
+  });
 
   return (
     <Flex
@@ -66,7 +66,7 @@ export default async function RootLayout({
         fonts.heading.variable,
         fonts.body.variable,
         fonts.label.variable,
-        fonts.code.variable
+        fonts.code.variable,
       )}
       {...htmlDataAttrs}
     >
@@ -123,5 +123,5 @@ export default async function RootLayout({
         </AppShell>
       </Provider>
     </Flex>
-  )
+  );
 }

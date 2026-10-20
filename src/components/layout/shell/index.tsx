@@ -2,7 +2,7 @@
 
 import { Column, Flex } from "@once-ui-system/core"
 import DecorBackground from "./DecorBackground"
-import { Header, Footer, RouteGuard } from "@/components"
+import { Header, Footer, RouteGuard, AdBanner } from "@/components"
 
 export const AppShell = ({
   person,
@@ -29,6 +29,12 @@ export const AppShell = ({
       <Flex zIndex={0} fillWidth padding="l" horizontal="center" flex={1}>
         <Flex horizontal="center" fillWidth minHeight="0">
           <RouteGuard>{children}</RouteGuard>
+        </Flex>
+      </Flex>
+      {/* Google AdSense — subtle, above the footer on every page */}
+      <Flex fillWidth horizontal="center" paddingX="l" paddingBottom="l">
+        <Flex fillWidth maxWidth="m">
+          <AdBanner slot="9247697339" />
         </Flex>
       </Flex>
       <Footer name={person.name} social={social} />

@@ -1,21 +1,21 @@
-import { baseURL } from "@/resources"
-import { NextResponse } from "next/server"
-import { getBlogsSSR, getInformationsSSR } from "../server-loader"
+import { baseURL } from "@/resources";
+import { NextResponse } from "next/server";
+import { getBlogsSSR, getInformationsSSR } from "../server-loader";
 
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const info = await getInformationsSSR()
-  const blogs = await getBlogsSSR()
-  const { blog, person } = info
+  const info = await getInformationsSSR();
+  const blogs = await getBlogsSSR();
+  const { blog, person } = info;
 
   // Sort posts by date (newest first)
   const sortedPosts = blogs.sort((a, b) => {
     return (
       new Date(b.metadata.updated_at || b.metadata.created_at).getTime() -
       new Date(a.metadata.updated_at || a.metadata.created_at).getTime()
-    )
-  })
+    );
+  });
 
   // Generate RSS XML
   const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -28,11 +28,11 @@ export async function GET() {
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${baseURL}/api/rss" rel="self" type="application/rss+xml" />
     <managingEditor>${person.email || "noreply@example.com"} (${
-    person.name
-  })</managingEditor>
+      person.name
+    })</managingEditor>
     <webMaster>${person.email || "noreply@example.com"} (${
-    person.name
-  })</webMaster>
+      person.name
+    })</webMaster>
     <image>
       <url>${baseURL}${person.avatar || "/images/avatar.jpg"}</url>
       <title>${blog.title}</title>
@@ -48,7 +48,7 @@ export async function GET() {
       <pubDate>${new Date(
         post.metadata.updated_at
           ? post.metadata.updated_at
-          : post.metadata.created_at
+          : post.metadata.created_at,
       ).toUTCString()}</pubDate>
       <description><![CDATA[${post.metadata.summary}]]></description>
       ${
@@ -58,11 +58,11 @@ export async function GET() {
       }
       ${post.metadata.tags ? `<category>${post.metadata.tags}</category>` : ""}
       <author>${person.email || "noreply@example.com"} (${person.name})</author>
-    </item>`
+    </item>`,
       )
       .join("")}
   </channel>
-</rss>`
+</rss>`;
 
   // Return the RSS XML with the appropriate content type
   return new NextResponse(rssXml, {
@@ -71,5 +71,5 @@ export async function GET() {
       "Cache-Control":
         "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
     },
-  })
+  });
 }
