@@ -2,6 +2,8 @@ import { NextRequest } from "next/server"
 import * as cookie from "cookie"
 import { fail, success } from "@/lib/api"
 
+export const dynamic = "force-dynamic"
+
 export async function GET(request: NextRequest) {
   const cookieHeader = request.headers.get("cookie") || ""
   const cookies = cookie.parse(cookieHeader)

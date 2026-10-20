@@ -2,6 +2,8 @@ import { baseURL } from "@/resources"
 import { NextResponse } from "next/server"
 import { getBlogsSSR, getInformationsSSR } from "../server-loader"
 
+export const dynamic = "force-dynamic"
+
 export async function GET() {
   const info = await getInformationsSSR()
   const blogs = await getBlogsSSR()

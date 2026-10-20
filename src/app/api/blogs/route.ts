@@ -4,7 +4,7 @@ import { okList, fail } from "@/lib/api"
 import { loadAllBlogs, type Blog } from "@/lib/blogs"
 
 const TTL = Number(process.env.POSTS_CACHE_TTL ?? 120)
-export const revalidate = 60
+export const dynamic = "force-dynamic"
 
 export async function GET(req: NextRequest) {
   try {

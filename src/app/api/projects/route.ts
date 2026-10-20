@@ -4,7 +4,7 @@ import { okList, fail } from "@/lib/api"
 import { loadAllProjects, type Project } from "@/lib/projects"
 
 const TTL = Number(process.env.CACHE_TTL ?? 120)
-export const revalidate = 60
+export const dynamic = "force-dynamic"
 
 export async function GET(req: NextRequest) {
   try {
