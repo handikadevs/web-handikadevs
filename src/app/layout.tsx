@@ -104,6 +104,12 @@ export default async function RootLayout({
         <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
         {/* theme color (Android status bar) */}
         <meta name="theme-color" content="#0B0B0C" />
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6530666305712669"
+          crossOrigin="anonymous"
+        />
       </head>
 
       <Script
